@@ -17,7 +17,12 @@ end
 def cast_list(title)
   # List all the actors for a particular movie, given the title.
   # Sort the results by starring order (ord). Show the actor id and name.
-
+  Actor
+    .select(:id, :name)
+    .joins(:castings)
+    .joins("JOIN movies ON movies.id = castings.movie_id")
+    .where("title = ?", title)
+    .order("ord")
 end
 
 def vanity_projects
